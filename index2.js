@@ -1,3 +1,9 @@
+//start-popup without reload
+document.querySelector(".new-game-tip").classList.remove("inactive");
+document.querySelector(".new-game-tip-ok").onclick = () => {
+  document.querySelector(".new-game-tip").classList.add("inactive");
+};
+
 const btnRules = document.querySelector(".btn-rules");
 const btnStart = document.querySelector(".btn-start");
 const inputBoxes = document.querySelectorAll(".input-box");
@@ -5,8 +11,7 @@ const numbersBtn = document.querySelectorAll(".number-btn");
 const btnCheckNumber = document.querySelector(".btn-check-number");
 const gameBlock = document.querySelector(".game-block");
 const answer = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-var moves = 1,
-  number = [];
+var moves = 1, number = [];
 console.log(answer);
 var flagShowAnswer = true;
 
