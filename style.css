@@ -76,15 +76,17 @@ img {
     flex-direction: row;
     justify-content: center;
     margin-top: 4%;
-    background-color: gray;
+
     box-shadow: 0 0 10px black;
-    font-size: 4vw;
 }
 
-.start-game a {
-    text-transform: uppercase;
-    text-decoration: none;
-    color: black;
+a {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 4vw;
+  text-decoration: none;
+  color: black;
+  background-color: gray;
 }
 
 @media all and (max-width: 550px) {
@@ -104,7 +106,7 @@ img {
       width: 20vw;
     }
     
-    .start-game {
+    a{
         font-size: 10vw;
     }
 }
