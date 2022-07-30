@@ -26,7 +26,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 600px;
-  height: 85vh;
+  height: 95vh;
 }
 
 .header {
@@ -291,6 +291,7 @@ body {
 @media all and (max-width: 600px) {
   .main-container {
     width: 350px;
+    height: 85vh;
   }
 
   .header img {
