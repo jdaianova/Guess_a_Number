@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bulls and Cows</title>
-    <link rel="stylesheet" href="style2.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="background">
@@ -25,13 +25,17 @@
 
         <div class="container">
           <div class="moves-title">
-            <div class="moves-title-column">move</div>
-            <div class="moves-title-column">number</div>
+            <div class="moves-title-column"><div>move</div></div>
+            <div class="moves-title-column"><div>number</div></div>
             <div class="moves-title-column">
+              <div>
               <img src="img/Cow-icon.png" alt="cow" />
+              </div>
             </div>
             <div class="moves-title-column">
+              <div>
               <img src="img/Bull-icon.png" alt="bull" />
+              </div>
             </div>
           </div>
           <div class="game-block">
@@ -73,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="popup-rules popup-rules-inactive">
+    <div class="popup-rules inactive">
       <div class="popup-rules-container">
         <div class="rules">
           <div class="rules-part rules-one">
@@ -106,6 +110,13 @@
       </div>
       <div class="popup-close">close</div>
     </div>
+    <div class="new-game-tip inactive">
+      <div class="new-game-tip-container">
+      <p>to start the game select any numeric input field</p>
+      <div class="new-game-tip-ok">ok :)</div>
+    </div>
+    </div>
   </body>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="index.js"></script>
 </html>

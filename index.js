@@ -7,34 +7,29 @@ const gameBlock = document.querySelector(".game-block");
 const answer = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
 var moves = 1,
   number = [];
-//console.log(answer);
+console.log(answer);
+var flagShowAnswer = true;
 
 //popup rules
-document.querySelector(".btn-rules").onclick = (e) => {
-  pushEffect(e.target);
-  document
-    .querySelector(".popup-rules")
-    .classList.remove("popup-rules-inactive");
-  //popup close
-  document.querySelector(".popup-close").onclick = (e) => {
-    document
-      .querySelector(".popup-rules")
-      .classList.add("popup-rules-inactive");
-  };
-};
+popup(".btn-rules", ".popup-rules", ".popup-close");
 
 //start button
 document.querySelector(".btn-start").onclick = (e) => {
   pushEffect(e.target);
-  location.reload();
+  document.querySelector(".new-game-tip").classList.remove("inactive");
+  document.querySelector(".new-game-tip-ok").onclick = () => {
+    document.querySelector(".new-game-tip").classList.add("inactive");
+    location.reload();
+  };
 };
 
 //show answer
 document.querySelector(".btn-show-answer").onclick = (e) => {
+  flagShowAnswer = false;
   pushEffect(e.target);
-  const showAnswer = document.createElement('div');
+  const showAnswer = document.createElement("div");
   showAnswer.innerText = answer;
-  showAnswer.classList.add('showAnswer');
+  showAnswer.classList.add("showAnswer");
   document.querySelector(".game-block").appendChild(showAnswer);
   //check scroll
   gameBlock.scrollTop = gameBlock.scrollHeight;
@@ -73,8 +68,14 @@ inputBoxes.forEach((inputBox) => {
         });
 
         //check if win
-        if (number.join("") == answer) {
-          alert(`win in ${moves} moves`);
+        if (number.join("") == answer && flagShowAnswer) {
+          Swal.fire({
+            title: "Win!!!",
+            text: `You guessed the number on the ${moves} move`,
+            imageUrl: "/img/win-cow.jpeg",
+            imageWidth: 400,
+            imageAlt: "Win cow",
+          });
         } else {
           // template string
           const moveRowHTML = `
@@ -91,17 +92,21 @@ inputBoxes.forEach((inputBox) => {
 
           // create row of game
           gameBlock.appendChild(
-              new DOMParser()
-                .parseFromString(moveRowHTML, "text/html")
-                .querySelector(".moves-row")
-            );
+            new DOMParser()
+              .parseFromString(moveRowHTML, "text/html")
+              .querySelector(".moves-row")
+          );
           //check scroll
           gameBlock.scrollTop = gameBlock.scrollHeight;
         }
         //clear number
         number = [];
       } else {
-        alert("empty");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You did not fill all the numbers! :)",
+        });
       }
     };
   };
@@ -150,4 +155,15 @@ function pushEffect(btn) {
   setTimeout(() => {
     btn.classList.remove("btn-click");
   }, 100);
+}
+
+function popup(btnClass, popupClass, btnClose) {
+  document.querySelector(btnClass).onclick = (e) => {
+    pushEffect(e.target);
+    document.querySelector(popupClass).classList.remove("inactive");
+    //popup close
+    document.querySelector(btnClose).onclick = (e) => {
+      document.querySelector(popupClass).classList.add("inactive");
+    };
+  };
 }
