@@ -84,7 +84,7 @@ body {
 }
 
 .moves-title {
-  width: 300px;
+  width: 305px;
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
@@ -112,7 +112,7 @@ body {
 }
 
 .game-block {
-  width: 300px;
+  width: 305px;
   margin-bottom: 10px;
   overflow: scroll;
   flex-grow: 1;
@@ -161,7 +161,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: 1px solid red;
   margin-left: 10px;
   margin-right: 10px;
 }
