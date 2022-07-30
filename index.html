@@ -5,71 +5,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bulls and Cows</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style2.css" />
   </head>
   <body>
     <div class="background">
       <div class="main-container">
         <div class="header">
-          <div class="pic-bull">
+          <div class="header-pic">
             <img src="img/Bull-icon-mirror.png" alt="bull" />
           </div>
           <div class="header-center">
             <div class="btn-div btn-rules"><p>rules</p></div>
             <div class="btn-div btn-start">new game</div>
           </div>
-          <div class="pic-cow">
+          <div class="header-pic">
             <img src="img/Cow-icon.png" alt="cow" />
           </div>
         </div>
 
         <div class="container">
-          <div class="game-container">
-            <div class="moves-title">
-              <div class="moves-title-column">move</div>
-              <div class="moves-title-column">number</div>
-              <div class="moves-title-column">
-                <img src="img/Cow-icon.png" alt="cow" />
+          <div class="moves-title">
+            <div class="moves-title-column">move</div>
+            <div class="moves-title-column">number</div>
+            <div class="moves-title-column">
+              <img src="img/Cow-icon.png" alt="cow" />
+            </div>
+            <div class="moves-title-column">
+              <img src="img/Bull-icon.png" alt="bull" />
+            </div>
+          </div>
+          <div class="game-block">
+            <!--<div class="moves-row">
+              <div class="moves-row-column">1</div>
+              <div class="moves-row-column">1234</div>
+              <div class="moves-row-column column-cow">2</div>
+              <div class="moves-row-column column-bull">3</div>
+            </div>-->
+          </div>
+          <div class="input-block">
+            <div class="input-block-top">
+              <div class="btn-show-answer">
+                <p>show<br />answer</p>
               </div>
-              <div class="moves-title-column">
-                <img src="img/Bull-icon.png" alt="bull" />
+              <div class="input-boxes">
+                <div data-id="0" class="input-box">-</div>
+                <div data-id="1" class="input-box">-</div>
+                <div data-id="2" class="input-box">-</div>
+                <div data-id="3" class="input-box">-</div>
+              </div>
+              <div class="btn-check-number">
+                <p>check<br />number</p>
               </div>
             </div>
-            <div class="game-block">
-              <!--<div class="moves-row">
-                <div class="moves-row-column">1</div>
-                <div class="moves-row-column">1234</div>
-                <div class="moves-row-column column-cow">2</div>
-                <div class="moves-row-column column-bull">3</div>
-              </div> !-->
-            </div>
-            <div class="input-block">
-              <div class="input-block-top">
-                <div class="btn-show-answer">
-                  <p>show<br />answer</p>
-                </div>
-                <div class="input-boxes">
-                  <div data-id="0" class="input-box">-</div>
-                  <div data-id="1" class="input-box">-</div>
-                  <div data-id="2" class="input-box">-</div>
-                  <div data-id="3" class="input-box">-</div>
-                </div>
-                <div class="btn-check-number">
-                  <p>check<br />number</p>
-                </div>
-              </div>
-              <div class="numbers-pad">
-                <div class="number-btn">0</div>
-                <div class="number-btn">1</div>
-                <div class="number-btn">2</div>
-                <div class="number-btn">3</div>
-                <div class="number-btn">4</div>
-                <div class="number-btn">5</div>
-                <div class="number-btn">6</div>
-                <div class="number-btn">7</div>
-                <div class="number-btn">8</div>
-                <div class="number-btn">9</div>
-              </div>
+            <div class="numbers-pad">
+              <div class="number-btn">0</div>
+              <div class="number-btn">1</div>
+              <div class="number-btn">2</div>
+              <div class="number-btn">3</div>
+              <div class="number-btn">4</div>
+              <div class="number-btn">5</div>
+              <div class="number-btn">6</div>
+              <div class="number-btn">7</div>
+              <div class="number-btn">8</div>
+              <div class="number-btn">9</div>
             </div>
           </div>
         </div>
