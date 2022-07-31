@@ -222,7 +222,7 @@ body {
 .popup-rules {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -236,21 +236,17 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 
-.popup-rules-inactive {
-  display: none;
-}
-
 .popup-rules-container {
   width: 500px;
   height: 400px;
   background-color: white;
   box-shadow: inset -3px -3px 7px 5px black;
-  padding: 20px;
+  padding: 30px;
 }
 
 .rules img {
   width: 70px;
-  margin-right: 10px;
+  margin-right: 10px
 }
 
 .rules-part {
@@ -275,7 +271,14 @@ body {
 }
 
 .rules-four-note {
-  font-size: 20px;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.rules-four-note li {
+  margin-top: 15px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .popup-close {

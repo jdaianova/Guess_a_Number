@@ -1,4 +1,4 @@
-//start-popup without reload
+//start-popup
 document.querySelector(".new-game-tip").classList.remove("inactive");
 document.querySelector(".new-game-tip-ok").onclick = () => {
   document.querySelector(".new-game-tip").classList.add("inactive");
@@ -10,58 +10,43 @@ const inputBoxes = document.querySelectorAll(".input-box");
 const numbersBtn = document.querySelectorAll(".number-btn");
 const btnCheckNumber = document.querySelector(".btn-check-number");
 const gameBlock = document.querySelector(".game-block");
-const answer = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-var moves = 1, number = [];
+var moves = 1;
+var number = [];
+var answer;
+getTheAnswer();
 console.log(answer);
-var flagShowAnswer = true;
 
-//popup rules
-popup(".btn-rules", ".popup-rules", ".popup-close");
+popup(".btn-rules", ".popup-rules", ".popup-close"); //popup rules
 
 //start button
 document.querySelector(".btn-start").onclick = (e) => {
   pushEffect(e.target);
-  location.reload();
 };
 
-//show answer
-document.querySelector(".btn-show-answer").onclick = (e) => {
-  flagShowAnswer = false;
-  pushEffect(e.target);
-  const showAnswer = document.createElement("div");
-  showAnswer.innerText = answer;
-  showAnswer.classList.add("showAnswer");
-  document.querySelector(".game-block").appendChild(showAnswer);
-  //check scroll
-  gameBlock.scrollTop = gameBlock.scrollHeight;
-
-};
+showAnswer();
 
 inputBoxes.forEach((inputBox) => {
   inputBox.onclick = (e) => {
-    //delete selected input-boxes
-    inputBoxes.forEach((inputBox) => {
-      inputBox.classList.remove("input-box-active");
-    });
-
-    //select active input-box
-    e.target.classList.add("input-box-active");
-
+    allBoxNotSelected();
+    e.target.classList.add("input-box-active"); //select active input-box
     //listener click of numbers
     numbersBtn.forEach((btn) => {
       btn.onclick = () => {
         pushEffect(btn);
-        // load value in input-box
-        e.target.innerText = btn.innerText;
-        number[e.target.dataset.id] = btn.innerText;
+        e.target.innerText = btn.innerText; // load value in input-box
+        number[e.target.dataset.id] = btn.innerText; // load value in array 'number'
       };
     });
 
-    //listener btn check
+    //listener btn check number
     btnCheckNumber.onclick = (e) => {
       pushEffect(e.target);
 
-      if (number[0] && number[1] && number[2] && number[3]) {
+      if (
+        allDigitsIsFill(number) &&
+        firstDigitNotZero(number[0]) &&
+        allDigitsDifferent(number)
+      ) {
         //clear input-boxes
         inputBoxes.forEach((inputBox) => {
           inputBox.classList.remove("input-box-active");
@@ -69,14 +54,16 @@ inputBoxes.forEach((inputBox) => {
         });
 
         //check if win
-        if (number.join("") == answer && flagShowAnswer) {
-          Swal.fire({
-            title: "Win!!!",
-            text: `You guessed the number on the ${moves} move`,
-            imageUrl: "/img/win-cow.jpeg",
-            imageWidth: 400,
-            imageAlt: "Win cow",
-          });
+        if (number.join("") == answer) {
+          popupWin();
+          //popup new game after win
+          document.querySelector(".new-game-tip-text").textContent =
+            "Start new game!";
+          document.querySelector(".new-game-tip").classList.remove("inactive");
+          document.querySelector(".new-game-tip-ok").onclick = () => {
+            document.querySelector(".new-game-tip").classList.add("inactive");
+            location.reload();
+          };
         } else {
           // template string
           const moveRowHTML = `
@@ -90,24 +77,26 @@ inputBoxes.forEach((inputBox) => {
               CowsAndBulls(number).bulls
             }</div>
         </div>`;
-
           // create row of game
           gameBlock.appendChild(
             new DOMParser()
               .parseFromString(moveRowHTML, "text/html")
               .querySelector(".moves-row")
           );
-          //check scroll
-          gameBlock.scrollTop = gameBlock.scrollHeight;
+          gameBlock.scrollTop = gameBlock.scrollHeight; //check scroll
         }
-        //clear number
-        number = [];
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "You did not fill all the numbers! :)",
-        });
+        number = []; //clear  current array 'number'
+        if (moves == 11) {
+          popupLose();
+          //popup new game after lose
+          document.querySelector(".new-game-tip-text").textContent =
+            "Start new game!";
+          document.querySelector(".new-game-tip").classList.remove("inactive");
+          document.querySelector(".new-game-tip-ok").onclick = () => {
+            document.querySelector(".new-game-tip").classList.add("inactive");
+            location.reload();
+          };
+        }
       }
     };
   };
@@ -132,8 +121,8 @@ function CowsAndBulls(arrCurrentNumber) {
   }
 
   //to count cows
-  arrAnswerCows = [...new Set(arrAnswerCows)];
-  arrCurrentNumberBulls = [...new Set(arrCurrentNumberBulls)];
+  // arrAnswerCows = [...new Set(arrAnswerCows)];
+  // arrCurrentNumberBulls = [...new Set(arrCurrentNumberBulls)];
   for (let i = 0; i < arrAnswerCows.length; i++) {
     for (let j = 0; j < arrCurrentNumberBulls.length; j++) {
       if (arrAnswerCows[i] == arrCurrentNumberBulls[j]) {
@@ -167,4 +156,93 @@ function popup(btnClass, popupClass, btnClose) {
       document.querySelector(popupClass).classList.add("inactive");
     };
   };
+}
+
+function popupError(dyscribingError) {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: dyscribingError,
+    confirmButtonColor: "rgb(30,30,30)",
+  });
+}
+
+function allDigitsDifferent(arr) {
+  let arrWithoutRepeats = [...new Set(arr)];
+  if (arrWithoutRepeats.length === arr.length) {
+    return true;
+  } else {
+    popupError("All digits in the number must be different.");
+    return false;
+  }
+}
+
+function allDigitsIsFill(arr) {
+  if (arr[0] && arr[1] && arr[2] && arr[3]) {
+    return true;
+  } else {
+    popupError("You did not fill all digits!");
+    return false;
+  }
+}
+
+function firstDigitNotZero(digit) {
+  if (digit == 0) {
+    popupError("The number must not start with 0.");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function allBoxNotSelected() {
+  //delete selected from input-boxes
+  inputBoxes.forEach((inputBox) => {
+    inputBox.classList.remove("input-box-active");
+  });
+}
+
+function popupWin() {
+  Swal.fire({
+    title: "Win!!!",
+    text: `You guessed the number on the ${moves} move`,
+    imageUrl: "img/pAVXmgu.gif",
+    imageWidth: 300,
+    imageAlt: "Win cow",
+    confirmButtonColor: "rgb(30,30,30)",
+  });
+}
+
+function popupLose() {
+  Swal.fire({
+    title: `Game over!`,
+    text: `Answer is ${answer}`,
+    imageUrl: "img/game_over-cow.gif",
+    imageWidth: 300,
+    imageAlt: "sad cow",
+    confirmButtonColor: "rgb(30,30,30)",
+  });
+}
+
+function showAnswer() {
+  document.querySelector(".btn-show-answer").onclick = (e) => {
+    flagShowAnswer = false;
+    pushEffect(e.target);
+    const showAnswer = document.createElement("div");
+    showAnswer.innerText = answer;
+    showAnswer.classList.add("showAnswer");
+    document.querySelector(".game-block").appendChild(showAnswer);
+    gameBlock.scrollTop = gameBlock.scrollHeight; //check scroll
+  };
+}
+
+function getTheAnswer() {
+  const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const shuffledArray = array.sort((a, b) => 0.5 - Math.random());
+  if (shuffledArray[0] == 0) {
+    getTheAnswer();
+  } else {
+    answer = shuffledArray.join("").slice(0, 4);
+    return;
+  }
 }
