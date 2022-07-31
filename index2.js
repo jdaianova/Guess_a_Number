@@ -21,11 +21,7 @@ popup(".btn-rules", ".popup-rules", ".popup-close");
 //start button
 document.querySelector(".btn-start").onclick = (e) => {
   pushEffect(e.target);
-  document.querySelector(".new-game-tip").classList.remove("inactive");
-  document.querySelector(".new-game-tip-ok").onclick = () => {
-    document.querySelector(".new-game-tip").classList.add("inactive");
-    location.reload();
-  };
+  location.reload();
 };
 
 //show answer
