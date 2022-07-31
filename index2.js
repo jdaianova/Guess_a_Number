@@ -13,17 +13,28 @@ const gameBlock = document.querySelector(".game-block");
 var moves = 1;
 var number = [];
 var answer;
+var flagShowAnswer = false;
 getTheAnswer();
-console.log(answer);
+//console.log(answer);
 
 popup(".btn-rules", ".popup-rules", ".popup-close"); //popup rules
 
 //start button
 document.querySelector(".btn-start").onclick = (e) => {
   pushEffect(e.target);
+  location.reload();
 };
 
-showAnswer();
+// btn showAnswer;
+document.querySelector(".btn-show-answer").onclick = (e) => {
+  flagShowAnswer = true;
+  pushEffect(e.target);
+  const showAnswer = document.createElement("div");
+  showAnswer.innerText = answer;
+  showAnswer.classList.add("showAnswer");
+  document.querySelector(".game-block").appendChild(showAnswer);
+  gameBlock.scrollTop = gameBlock.scrollHeight; //check scroll
+};
 
 inputBoxes.forEach((inputBox) => {
   inputBox.onclick = (e) => {
@@ -55,15 +66,27 @@ inputBoxes.forEach((inputBox) => {
 
         //check if win
         if (number.join("") == answer) {
-          popupWin();
-          //popup new game after win
-          document.querySelector(".new-game-tip-text").textContent =
-            "Start new game!";
-          document.querySelector(".new-game-tip").classList.remove("inactive");
-          document.querySelector(".new-game-tip-ok").onclick = () => {
-            document.querySelector(".new-game-tip").classList.add("inactive");
-            location.reload();
-          };
+          if (flagShowAnswer) {
+            console.log("enter if");
+            popupError(
+              `You have already seen the answer! :) 
+                       Start new game!`
+            );
+            popupStartNewGame();
+          } else {
+            popupWin();
+            popupStartNewGame();
+            //popup new game after win
+            // document.querySelector(".new-game-tip-text").textContent =
+            //   "Start new game!";
+            // document
+            //   .querySelector(".new-game-tip")
+            //   .classList.remove("inactive");
+            // document.querySelector(".new-game-tip-ok").onclick = () => {
+            //   document.querySelector(".new-game-tip").classList.add("inactive");
+            //   location.reload();
+            // };
+          }
         } else {
           // template string
           const moveRowHTML = `
@@ -224,18 +247,6 @@ function popupLose() {
   });
 }
 
-function showAnswer() {
-  document.querySelector(".btn-show-answer").onclick = (e) => {
-    flagShowAnswer = false;
-    pushEffect(e.target);
-    const showAnswer = document.createElement("div");
-    showAnswer.innerText = answer;
-    showAnswer.classList.add("showAnswer");
-    document.querySelector(".game-block").appendChild(showAnswer);
-    gameBlock.scrollTop = gameBlock.scrollHeight; //check scroll
-  };
-}
-
 function getTheAnswer() {
   const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const shuffledArray = array.sort((a, b) => 0.5 - Math.random());
@@ -245,4 +256,13 @@ function getTheAnswer() {
     answer = shuffledArray.join("").slice(0, 4);
     return;
   }
+}
+
+function popupStartNewGame() {
+  document.querySelector(".new-game-tip-text").textContent = "Start new game!";
+  document.querySelector(".new-game-tip").classList.remove("inactive");
+  document.querySelector(".new-game-tip-ok").onclick = () => {
+    document.querySelector(".new-game-tip").classList.add("inactive");
+    location.reload();
+  };
 }
