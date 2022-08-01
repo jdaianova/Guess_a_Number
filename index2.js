@@ -70,7 +70,7 @@ inputBoxes.forEach((inputBox) => {
             console.log("enter if");
             popupError(
               `You have already seen the answer! :) 
-                       Start new game!`
+                       Start a new game!`
             );
             popupStartNewGame();
           } else {
